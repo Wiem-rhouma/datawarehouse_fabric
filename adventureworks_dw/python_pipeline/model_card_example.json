@@ -1,0 +1,30 @@
+{
+  "date_entrainement": "2026-08-03_12h55",
+  "granularite": "trimestrielle",
+  "nb_points_historique_total": 12,
+  "periode_historique": "2011-04-01 a 2014-01-01",
+  "exclusions_donnees": "T2 2014 exclu (juin 2014 incomplet dans la source)",
+  "parametres_modele": {
+    "yearly_seasonality": true,
+    "weekly_seasonality": false,
+    "daily_seasonality": false,
+    "interval_width": 0.95
+  },
+  "cross_validation": {
+    "methode": "rolling-origin, horizon = 1 trimestre",
+    "nb_plis": 6,
+    "mape_prophet_global_pct": 74.86,
+    "mape_baseline_naive_pct": 23.97,
+    "mape_prophet_si_train_geq_9_trimestres_pct": 2.61
+  },
+  "limites_connues": [
+    "Historique tres limite (12 trimestres) : resultats a interpreter avec prudence.",
+    "Prophet devient fiable seulement a partir de ~9 trimestres d'entrainement (cycle annuel quasi complet) ; en dessous, une baseline naive saisonniere est plus fiable.",
+    "Les intervalles de confiance (borne_basse/borne_haute) sous-estiment probablement la vraie incertitude, l'estimation rapide de Prophet etant peu robuste avec si peu de donnees.",
+    "Prevision limitee a 4 trimestres (1 an), pour ne pas exceder la duree de l'historique disponible."
+  ],
+  "fichiers_associes": {
+    "modele": "prophet_model_2026-08-03_12h55.pkl",
+    "table_sql": "dbo.previsions_ca"
+  }
+}
