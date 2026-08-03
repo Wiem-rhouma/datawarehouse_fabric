@@ -2,3 +2,11 @@
 target/
 dbt_packages/
 logs/
+# Pipeline Python local
+python_pipeline/model_output/
+python_pipeline/venv/
+__pycache__/
+*.pyc
+
+# Logs dbt
+logs/
