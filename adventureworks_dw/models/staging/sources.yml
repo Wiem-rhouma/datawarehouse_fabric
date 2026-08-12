@@ -1,0 +1,29 @@
+version: 2
+
+sources:
+  - name: bronze
+    description: "Tables brutes copiées depuis SQL Server AdventureWorks2019 via Copy Job Fabric"
+    schema: bronze
+    tables:
+      - name: customer
+        description: "Clients (Sales.Customer)"
+      - name: product
+        description: "Produits (Production.Product)"
+      - name: sales_order_header
+        description: "En-têtes de commandes de vente (Sales.SalesOrderHeader)"
+      - name: sales_order_detail
+        description: "Lignes de commandes de vente (Sales.SalesOrderDetail)"
+      - name: sales_territory
+        description: "Territoires de vente (Sales.SalesTerritory)"
+      - name: product_category
+        description: "Catégories de produits (Production.ProductCategory)"
+      - name: product_subcategory
+        description: "Sous-catégories de produits (Production.ProductSubcategory)"
+      - name: purchase_order_header
+        description: "En-têtes de commandes d'achat (Purchasing.PurchaseOrderHeader)"
+      - name: purchase_order_detail
+        description: "Lignes de commandes d'achat (Purchasing.PurchaseOrderDetail)"
+      - name: vendor
+        description: "Fournisseurs (Purchasing.Vendor)"
+      - name: employee
+        description: "Employés (HumanResources.Employee), colonne OrganizationNode exclue"

@@ -1,0 +1,120 @@
+version: 2
+
+models:
+  - name: stg_customer
+    description: "Clients nettoyés et dédupliqués"
+    columns:
+      - name: CustomerID
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_product
+    description: "Produits nettoyés, prix et coûts validés positifs"
+    columns:
+      - name: ProductID
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_sales_order_header
+    description: "Commandes de vente, cohérence temporelle vérifiée"
+    columns:
+      - name: SalesOrderID
+        tests:
+          - unique
+          - not_null
+      - name: CustomerID
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_customer')
+              field: CustomerID
+
+  - name: stg_sales_order_detail
+    description: "Lignes de commandes de vente, quantités et prix validés"
+    columns:
+      - name: SalesOrderDetailID
+        tests:
+          - unique
+          - not_null
+      - name: SalesOrderID
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_sales_order_header')
+              field: SalesOrderID
+
+  - name: stg_sales_territory
+    description: "Territoires de vente"
+    columns:
+      - name: TerritoryID
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_product_category
+    description: "Catégories de produits"
+    columns:
+      - name: ProductCategoryID
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_product_subcategory
+    description: "Sous-catégories de produits, rattachées à une catégorie"
+    columns:
+      - name: ProductSubcategoryID
+        tests:
+          - unique
+          - not_null
+      - name: ProductCategoryID
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_product_category')
+              field: ProductCategoryID
+
+  - name: stg_purchase_order_header
+    description: "Commandes d'achat, cohérence temporelle vérifiée"
+    columns:
+      - name: PurchaseOrderID
+        tests:
+          - unique
+          - not_null
+      - name: VendorID
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_vendor')
+              field: BusinessEntityID
+
+  - name: stg_purchase_order_detail
+    description: "Lignes de commandes d'achat, quantités et prix validés"
+    columns:
+      - name: PurchaseOrderDetailID
+        tests:
+          - unique
+          - not_null
+      - name: PurchaseOrderID
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_purchase_order_header')
+              field: PurchaseOrderID
+
+  - name: stg_vendor
+    description: "Fournisseurs"
+    columns:
+      - name: BusinessEntityID
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_employee
+    description: "Employés, OrganizationNode exclue (incompatible Delta Lake)"
+    columns:
+      - name: BusinessEntityID
+        tests:
+          - unique
+          - not_null
