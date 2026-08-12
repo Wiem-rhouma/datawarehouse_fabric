@@ -1,0 +1,76 @@
+version: 2
+
+models:
+  - name: dim_customer
+    description: "Dimension client, avec type dérivé (Entreprise/Particulier)"
+    columns:
+      - name: CustomerID
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_vendor
+    description: "Dimension fournisseur"
+    columns:
+      - name: VendorID
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_employee
+    description: "Dimension employé, partagée entre ventes et achats"
+    columns:
+      - name: EmployeeID
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_product
+    description: "Dimension produit, fusion produit/sous-catégorie/catégorie"
+    columns:
+      - name: ProductID
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_date
+    description: "Dimension date générée, 2011-01-01 à 2014-12-31"
+    columns:
+      - name: DateKey
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_territory
+    description: "Dimension territoire de vente"
+    columns:
+      - name: TerritoryID
+        tests:
+          - unique
+          - not_null
+
+  - name: fct_sales
+    description: "Table de faits ventes, grain = SalesOrderDetail"
+    columns:
+      - name: SalesOrderDetailID
+        tests:
+          - unique
+          - not_null
+      - name: ProductID
+        tests:
+          - relationships:
+              to: ref('dim_product')
+              field: ProductID
+
+  - name: fct_purchases
+    description: "Table de faits achats, grain = PurchaseOrderDetail"
+    columns:
+      - name: PurchaseOrderDetailID
+        tests:
+          - unique
+          - not_null
+      - name: ProductID
+        tests:
+          - relationships:
+              to: ref('dim_product')
+              field: ProductID
